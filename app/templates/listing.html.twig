@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Equipments Listing{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <div class="w3-display-middle">
+        <table id="customers">
+            <tr>
+                <th>Equipment ID</th>
+                <th>Station</th>
+                <th>Equipment Name</th>
+            </tr>
+            {% for equipment in equipments %}
+                <tr>
+                    <td>{{ equipment.id }}</td>
+                    <td>({{ equipment.station_id_id }}) {{ equipment.station_name }}</td>
+                    <td>{{ equipment.name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

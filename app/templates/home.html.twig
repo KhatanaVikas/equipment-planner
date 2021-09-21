@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Equipments Listing{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <div class="w3-display-middle">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+        <div class="login">
+            <h6> Select booking date and station</h6>
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+                {{ form_widget(form.booking_date, {'attr': {'class': 'text'}}) }}
+                <span>{{ form_label(form.booking_date) }}</span>
+                <br>
+                <br>
+                <br>
+                {{ form_widget(form.station, {'attr': {'class': 'text'}}) }}
+                <span>{{ form_label(form.station) }}</span> 
+                <br>
+                <br>
+                {{ form_widget(form.send, { 'label': 'Search Equipments' }) }}
+                <hr>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
