@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use DateTime;
 use App\Entity\Equipments;
+use App\Entity\Stations;
 
 class AppController extends AbstractController
 {
@@ -18,6 +19,10 @@ class AppController extends AbstractController
      */
     public function indexAction(Request $request): Response
     {
+        $stations = $this->getDoctrine()
+                        ->getRepository(Stations::class)
+                        ->findStationsMap();
+        
         $defaultData = [];
         $form = $this->createFormBuilder($defaultData)
             ->add('booking_date', DateType::class, [
@@ -25,12 +30,7 @@ class AppController extends AbstractController
                 'data' => new \DateTime(),
             ])
             ->add('station', ChoiceType::class, [
-                'choices'  => [
-                    'Munich' => 1,
-                    'Paris' => 2,
-                    'Porto' => 3,
-                    'Madrid' => 4
-                ],
+                'choices'  => $stations,
             ])
             ->add('send', SubmitType::class)
             ->getForm();
@@ -59,7 +59,7 @@ class AppController extends AbstractController
     /**
      * @Route("/listing/{stationId}/{bookingDate}", name="equipment_listing")
      */
-    public function equipmentListingAction(int $stationId, int $bookingDate)
+    public function equipmentListingAction(int $stationId, int $bookingDate): Response
     {
         $date = date('Y-m-d',$bookingDate);
         $result = $this->getDoctrine()

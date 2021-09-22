@@ -19,32 +19,14 @@ class StationsRepository extends ServiceEntityRepository
         parent::__construct($registry, Stations::class);
     }
 
-    // /**
-    //  * @return Stations[] Returns an array of Stations objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findStationsMap(): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $stations = $this->findAll();
+        $formInputStations = [];
+        foreach ($stations as $station) {
+            $formInputStations[$station->getName()] = $station->getId();
+        }
 
-    /*
-    public function findOneBySomeField($value): ?Stations
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $formInputStations;
     }
-    */
 }
