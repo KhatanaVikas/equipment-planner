@@ -20,6 +20,9 @@ restart-local:
 	$(MAKE) stop-local
 	$(MAKE) start-local
 
+composer-install:
+	docker-compose run --rm php74-service composer install
+
 migrations-update:
 	docker-compose run --rm php74-service php bin/console doctrine:database:drop --if-exists --force 
 	docker-compose run --rm php74-service php bin/console doctrine:database:create
@@ -31,4 +34,5 @@ init-local:
 	$(MAKE) rm-local
 	$(MAKE) build
 	$(MAKE) start-local
+	$(MAKE) composer-install
 	$(MAKE) migrations-update

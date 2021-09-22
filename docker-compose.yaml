@@ -44,13 +44,4 @@ services:
         restart: unless-stopped
         networks: 
             - nginx-php-mysql-node
-
-    # nodejs
-    node-service:
-        image: node:latest
-        networks: 
-            - nginx-php-mysql-node
-        working_dir: /var/www/project
-        volumes:
-            - ./app:/var/www/project
-      
+            

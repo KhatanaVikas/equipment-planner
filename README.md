@@ -4,7 +4,7 @@ System Requirements :
 1. docker installed in your local pc.
 
 Steps to run the app:
-1. `make init-local`
+1. `make init-local` ---> Enter `yes` when prompted in last step for db sample data creation
 2. Visit the app at `localhost:8080`
 3. To update the sample data : Update the `src/DataFixtures/AppFixtures.php` and run   `make migrations-update`.
 4. To acces the mysql via commandline : 
