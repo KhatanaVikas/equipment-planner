@@ -5,20 +5,40 @@
     {{ parent() }}
 {% endblock %}
 {% block content %}
-    <div class="w3-display-middle">
-        <table id="customers">
+    <div>
+        <div style="padding:150px 150px 0px 150px;">
+            <span><h4>Available equipments in the station "{{station}}" on {{booking_date}} </h4></span>
+            <table id="customers">
+                <tr>
+                    <th>Equipment ID</th>
+                    <th>Station</th>
+                    <th>Equipment Name</th>
+                </tr>
+                {% for equipment in equipments %}
+                    <tr>
+                        <td>{{ equipment.id }}</td>
+                        <td>({{ equipment.station_id_id }}) {{ equipment.station_name }}</td>
+                        <td>{{ equipment.name }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div style="padding:100px 150px 0px 150px;">
+            <span><h4>Already booked equipments on {{booking_date}}</h4></span>
+            <table id="customers">
             <tr>
                 <th>Equipment ID</th>
-                <th>Station</th>
                 <th>Equipment Name</th>
+                <th>Equipment pickup station</th>
             </tr>
-            {% for equipment in equipments %}
+            {% for booked_equipment in booked_equipments %}
                 <tr>
-                    <td>{{ equipment.id }}</td>
-                    <td>({{ equipment.station_id_id }}) {{ equipment.station_name }}</td>
-                    <td>{{ equipment.name }}</td>
+                    <td>{{ booked_equipment.id }}</td>
+                    <td>{{ booked_equipment.name }}</td>
+                    <td>{{ booked_equipment.station_name }}</td>
                 </tr>
             {% endfor %}
         </table>
+        </div>
     </div>
 {% endblock %}

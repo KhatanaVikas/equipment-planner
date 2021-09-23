@@ -43,4 +43,26 @@ class EquipmentsRepository extends ServiceEntityRepository
 
         return $stmt->fetchAllAssociative();
     }
+
+    public function findBookedEquipmentsByDate(string $bookingDate) : array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT eq.*, st.name as station_name FROM equipments eq JOIN stations st 
+            ON eq.station_id_id = st.id
+            where eq.id IN 
+            (SELECT e.id FROM equipments e 
+            LEFT join rental_order_equipments roe
+            ON e.id = roe.equipment_id_id
+            WHERE :booking_date BETWEEN roe.equipment_pickup_date
+            AND roe.equipment_drop_date) ORDER BY eq.id
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            'booking_date' => $bookingDate
+        ]);
+
+        return $stmt->fetchAllAssociative();
+
+    }
 }

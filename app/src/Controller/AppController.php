@@ -62,11 +62,19 @@ class AppController extends AbstractController
     public function equipmentListingAction(int $stationId, int $bookingDate): Response
     {
         $date = date('Y-m-d',$bookingDate);
-        $result = $this->getDoctrine()
+        $availableEquipments = $this->getDoctrine()
             ->getRepository(Equipments::class)
             ->findByEquipmentsInStationForDate($stationId, $date);
-        
-        return $this->render('listing.html.twig',['equipments' => $result]);
+        $bookedEquipments = $this->getDoctrine()
+            ->getRepository(Equipments::class)
+            ->findBookedEquipmentsByDate($date);
+            
+        return $this->render('listing.html.twig',[
+            'equipments' => $availableEquipments,
+            'booked_equipments' => $bookedEquipments,
+            'station' => $availableEquipments[0]['station_name'] ?? '',
+            'booking_date' => $date,
+        ]);
     }
 
 }
